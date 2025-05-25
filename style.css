@@ -1,0 +1,312 @@
+/* static/style.css */
+
+/* --- Base Styles & Layout --- */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom right, #8b5cf6, #4f46e5); /* Purple-600 to Indigo-800 gradient */
+    color: white;
+    min-height: 100vh; /* Ensure gradient covers full viewport height */
+    line-height: 1.5; /* Default line height */
+    /* Добавлен небольшой отступ сверху, чтобы контент не прилипал к хедеру на маленьких экранах */
+    padding-top: 1rem; /* Или другое значение по необходимости */
+}
+
+/* Убираем стандартный отступ сверху у main */
+main {
+    padding-top: 0;
+}
+
+
+/* Apply semi-transparent background and blur to specific elements */
+.bg-opacity-10 { background-color: rgba(255, 255, 255, 0.1); }
+.bg-opacity-20 { background-color: rgba(255, 255, 255, 0.2); }
+.bg-black-opacity-30 { background-color: rgba(0, 0, 0, 0.3); }
+.border-opacity-30 { border-color: rgba(255, 255, 255, 0.3); }
+.backdrop-blur-sm { backdrop-filter: blur(4px); }
+.backdrop-blur-md { backdrop-filter: blur(12px); }
+
+/* --- Animations --- */
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .5; }
+}
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: 360deg ; } /* Исправлена опечатка */
+}
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* --- Header Styles --- */
+header {
+    /* position: sticky; */ /* Опционально: сделать хедер прилипающим при прокрутке */
+    top: 0;
+    z-index: 50; /* Чтобы хедер был над другим контентом при скролле */
+    /* py-4 px-6 shadow-lg bg-black-opacity-30 backdrop-blur-md */
+    /* Эти классы Tailwind уже в HTML */
+}
+
+header h1 {
+     /* text-2xl sm:text-3xl font-bold text-center sm:text-left mb-2 sm:mb-0 */
+     /* Эти классы Tailwind уже в HTML */
+}
+
+/* Style for the Instructions button (which is now a <button> tag) in the header */
+/* Объединяем стили для ссылок, которые выглядят как кнопки, и для обычных кнопок */
+.tab-button,
+header button#instructions-button { /* Применяем те же стили к кнопке с id instructions-button в хедере */
+    background-color: rgba(255, 255, 255, 0.2); /* Default inactive style */
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition */
+    white-space: nowrap; /* Предотвращает перенос текста кнопки */
+    /* Убираем подчеркивание у ссылок, если они используют этот класс (хотя instruction-button теперь кнопка) */
+    text-decoration: none;
+     /* Центрируем текст внутри кнопки/ссылки */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     /* Inherit color */
+    color: inherit; /* Кнопка наследует цвет текста */
+    /* Классы px-4 py-1 rounded-full transition-colors уже в HTML для кнопки в хедере */
+    /* Классы px-4 sm:px-6 py-2 rounded-full transition-all уже в HTML для кнопок навигации */
+}
+
+
+/* Стиль при наведении для кнопок и ссылок-кнопок */
+.tab-button:hover:not(:disabled),
+header button#instructions-button:hover:not(:disabled) { /* Убрал ховер эффект для отключенных элементов */
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Стиль активной вкладки для кнопок */
+.tab-button.active {
+    background-color: #a78bfa; /* purple-500 from Tailwind */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* sm shadow */
+}
+
+/* --- Tab Content Container Style --- */
+/* Этот контейнер оборачивает все вкладки (compare, leaderboard, submit) */
+#tab-content-container.hidden {
+    display: none; /* Управляется JS для скрытия/отображения всех вкладок сразу */
+}
+
+
+/* --- Tab Content Basic Style (Стили для div внутри #tab-content-container) --- */
+/* Эти стили применяются к div'ам #compare-tab, #leaderboard-tab, #submit-tab */
+.tab-content.hidden {
+    display: none; /* Управляется JS для переключения отдельных вкладок */
+}
+
+
+/* --- Button Disabled State --- */
+button:disabled,
+a:disabled { /* Применяем стили disabled и к ссылкам, если они станут disabled */
+    background-color: #4b5563 !important; /* gray-600 */
+    color: #d1d5db !important; /* gray-300 */
+    cursor: not-allowed !important;
+    transition: background-color 0.2s ease-in-out;
+    opacity: 0.8;
+}
+
+
+/* --- Comparison Section (#compare-tab) --- */
+
+#compare-tab #current-match { /* Уточняем селектор */
+    /* grid grid-cols-1 md:grid-cols-2 gap-6 */
+    /* Эти классы Tailwind уже в HTML */
+}
+
+#compare-tab #current-match > div { /* Уточняем селектор */
+    height: 24rem; /* Увеличил высоту для лучшего отображения фото */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    /* bg-white, bg-opacity-10, backdrop-blur-sm, p-4, rounded-xl, shadow-lg, transform, transition-transform */
+    /* Эти классы Tailwind уже в HTML */
+}
+
+#compare-tab #current-match .image-container { /* Уточняем селектор */
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#compare-tab #current-match .image-container img { /* Уточняем селектор */
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#compare-tab #current-match .text-container { /* Уточняем селектор */
+    width: 100%;
+    text-align: center;
+}
+
+/* --- Mobile Optimization: Adjust comparison block height on small screens --- */
+@media (max-width: 767px) { /* Applies below Tailwind's 'md' breakpoint */
+    #compare-tab #current-match > div { /* Уточняем селектор */
+        height: 18rem; /* Reduced height for mobile */
+        padding: 0.75rem; /* Slightly less padding */
+    }
+    #compare-tab #current-match .image-container { /* Уточняем селектор */
+        margin-bottom: 0.25rem;
+    }
+}
+
+
+/* --- Leaderboard Section (#leaderboard-tab) --- */
+
+#leaderboard-tab #leaderboard-list { /* Уточняем селектор */
+    /* space-y-4 max-w-4xl mx-auto */
+    /* Эти классы Tailwind уже в HTML */
+}
+
+#leaderboard-tab #leaderboard-list > div { /* Уточняем селектор */
+    /* bg-white, bg-opacity-10, backdrop-blur-sm, p-4, rounded-xl, flex, items-center, justify-between, shadow-md, hover:shadow-xl, transition-shadow, animate-fade-in */
+    /* Эти классы Tailwind уже в HTML */
+}
+
+/* УДАЛЕНО: Стиль для номера места больше не нужен */
+/*
+#leaderboard-list .flex.items-center.space-x-4 > span:first-child {
+    min-width: 2rem;
+    text-align: right;
+}
+*/
+
+#leaderboard-tab #leaderboard-list img { /* Уточняем селектор */
+    width: 4rem; /* w-16 = 64px */
+    height: 4rem; /* h-16 = 64px */
+    border-radius: 9999px; /* rounded-full */
+    object-fit: cover;
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+#leaderboard-tab #leaderboard-list .rank-votes { /* Уточняем селектор */
+    display: flex;
+    align-items: center;
+    min-width: 6rem;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+/* --- Submit Section (#submit-tab) --- */
+#submit-tab #submit-form { /* Уточняем селектор */
+    /* bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-2xl mx-auto */
+    /* Эти классы Tailwind уже в HTML */
+}
+#submit-tab #admin-section { /* Уточняем селектор */
+    /* mt-8 bg-white bg-opacity-10 backdrop-blur-sm p-6 rounded-xl max-w-2xl mx-auto */
+     /* Эти классы Tailwind уже в HTML */
+}
+
+
+/* --- Footer --- */
+footer {
+    /* bg-black-opacity-30 backdrop-blur-md py-4 text-center text-sm text-gray-400 mt-8 */
+    /* Эти классы Tailwind уже в HTML */
+    width: 100%; /* Убедимся, что футер занимает всю ширину */
+}
+
+
+/* --- Styles for the Inline Instructions Container (#instructions-inline-container) --- */
+/* Этот контейнер будет показываться вместо #tab-content-container */
+
+#instructions-inline-container.hidden {
+    display: none; /* Управляется JS */
+}
+
+#instructions-inline-container {
+    max-width: 800px; /* Максимальная ширина контейнера инструкции */
+    margin: 0 auto; /* Центрирование. Убираем верхний/нижний отступ, т.к. main уже имеет pb-12 */
+    padding: 2rem; /* Внутренние отступы */
+    background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+    backdrop-filter: blur(4px); /* Размытие */
+    border-radius: 0.75rem; /* Закругленные углы */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Легкая рамка */
+    position: relative; /* Для позиционирования кнопки закрытия */
+    /* Добавлен отступ сверху, чтобы не прилипать к навигации */
+    margin-top: 1.5rem; /* mt-6 в HTML */
+}
+
+#instructions-inline-container h2 {
+    font-size: 2rem; /* text-3xl */
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0; /* Убираем стандартный верхний отступ */
+    margin-bottom: 1.5rem; /* mb-6 */
+    color: #a78bfa; /* purple-500 */
+}
+
+#instructions-inline-container h3 {
+     font-size: 1.25rem; /* text-xl */
+     font-weight: semibold;
+     margin-top: 1.5rem; /* mt-6 */
+     margin-bottom: 0.75rem; /* mb-3 */
+     color: #d8b4fe; /* purple-300 */
+}
+
+#instructions-inline-container p {
+    margin-bottom: 1rem; /* Отступ между параграфами */
+    line-height: 1.6; /* Улучшенный межстрочный интервал */
+}
+
+#instructions-inline-container ul {
+    list-style: disc; /* Маркеры списка */
+    padding-left: 1.5rem; /* Отступ слева для списка */
+    margin-bottom: 1rem;
+}
+
+#instructions-inline-container li {
+    margin-bottom: 0.5rem; /* Отступ между пунктами списка */
+}
+
+#instructions-inline-container strong {
+    color: #fcd34d; /* yellow-300 */
+}
+
+#instructions-inline-container .text-yellow-300 {
+    color: #fcd34d; /* yellow-300 */
+}
+
+/* Стиль для кнопки закрытия внутри инлайн инструкции */
+#close-instructions-button {
+    position: absolute;
+    top: 0.75rem; /* pt-3 */
+    right: 0.75rem; /* pr-3 */
+    background: none; /* Без фона */
+    border: none; /* Без рамки */
+    color: #d1d5db; /* gray-300 */
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.5rem; /* Увеличиваем область клика */
+    transition: color 0.2s ease-in-out;
+    /* Убедимся, что она поверх контента */
+    z-index: 10;
+}
+
+#close-instructions-button:hover {
+    color: white;
+}
